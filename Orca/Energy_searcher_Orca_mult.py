@@ -13,12 +13,11 @@ for file in glob.glob('*out'):
     new_job = '$$$$$$$$$$$$$$$$  JOB NUMBER'
     
     for line in iter(reading_file):
-        if new_job in line:
-            continue
         if energy_line in line and new_job not in line:
             E_Regex_search = E_Regex.search(line)
+            some_data[file + '' + str(x)] = E_Regex_search.group()
+        elif new_job in line:
             x += 1
-    some_data[file + '' + str(x)] = E_Regex_search.group()
     reading_file.close()
 
 sum_table.write('File_name'.ljust(30) + 'Original values'.rjust(15) + \
