@@ -2,7 +2,7 @@ import glob, re
 
 sum_table = open('Erel_table.dat', '+w')
 
-E_Regex = re.compile(r'-\d{3}.\d{12}')
+E_Regex = re.compile(r'-\d*.\d*')
 
 some_data = {}
 x = 0
