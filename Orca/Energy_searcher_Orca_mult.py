@@ -1,3 +1,5 @@
+#! python3
+
 import glob, re
 
 sum_table = open('Erel_table.dat', '+w')
