@@ -80,7 +80,6 @@ for file in glob.glob('*.txt'):
                 E_regex_search = E_regex.search(line)
                 try:
                     sheet.cell(row=x, column=y).value = E_regex_search.group()
-                    sheet.cell(row=x, column=y).number_format = '0.00E+00'
                 except:
                     print('NaN was found in the line')
                     sheet.cell(row=x, column=y).value = 'NaN'
