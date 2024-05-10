@@ -20,7 +20,7 @@ def fr_search():
         word = 'Total sM(s)'
         for j in iter(f):
             if word in j:
-                save = i + '\t' + j[30:38]
+                save = i + '\t\t' + 'Rf=' + j[30:35] + '%' + '\n'
         rf.write(save)
         f.close()
     rf.close()
@@ -93,7 +93,7 @@ def plotting_rdf_one_page(columns=3):
 
 
 # Plotting RDF on one page (.png) in columns
-def plotting_rdf(columns=3):
+def plotting_rdf():
     paths = sorted(Path('.\\RDF').glob('*.dat'))
     file_in_the_RDF_directory = list(map(str, paths))
     for i in file_in_the_RDF_directory:
@@ -101,22 +101,26 @@ def plotting_rdf(columns=3):
 
         for line in rf_data:
             if line[0:4] in str(i):
-                name = str(line[4:14]) + ' %'
+                name = str(line)
 
         data = np.loadtxt(i)
         r = data[:, 0]
         exp_fr = data[:, 1]
         th_fr = data[:, 2]
         delta_fr = data[:, 3] - 1.5
-        plt.scatter(r, exp_fr, s=12, linestyle='solid',  linewidth=0.4, facecolors='none', edgecolors='r', label='exp_fr')
-        plt.plot(r, th_fr, color='black', linewidth=1, label='th_fr')
-        plt.plot(r, delta_fr, color='green', label='delta_fr')
-        matplotlib.pyplot.xlabel('r')
-        matplotlib.pyplot.title(str(i).replace('RDF\\', '') + ': Rf=' + name)
-        matplotlib.pyplot.legend()
+        plt.figure(figsize=(12,10))
+        plt.plot(r, th_fr, color='black', linewidth=2, label='th_fr')
+        plt.scatter(r, exp_fr, s=42, linestyle='solid',  linewidth=0.8, facecolors='none', edgecolors='r', label='exp_fr')
+        plt.plot(r, delta_fr, color='orange', linewidth=2, label='delta_fr')
+        plt.xlabel('r, ' + r"$\mathrm{\AA}$", fontsize=18)
+        plt.title(name.replace('\t\t', ': '), fontsize=18)
+        plt.xticks(ticks=np.arange(min(r), max(r) + 1, 1.0), fontsize = 15)
+        plt.yticks([])
+        plt.legend(fontsize=18)
+        plt.grid()
 
         plt.savefig(i + '.png')
-        plt. clf()
+        plt.clf()
 
 rdf_search(' Radial distribution functions: ')
 plotting_rdf()
