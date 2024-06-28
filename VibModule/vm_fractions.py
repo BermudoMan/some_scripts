@@ -1,4 +1,3 @@
-import pandas as pd
 import pathlib
 from pathlib import Path
 from itertools import islice
@@ -34,9 +33,7 @@ def vm_cut_data():
 	for vm_path in Path('.').rglob('*.vm'):
 		vm_files.append(vm_path)
 
-
 	print(vm_files)
 
-
-#vm_inp_gen()
+vm_inp_gen()
 vm_dirs()
