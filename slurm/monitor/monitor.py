@@ -2,10 +2,10 @@ import paramiko
 import pathlib
 from pathlib import Path
 
-host = "isuct.ru"
-user = "ged_lab"
-password = "0FhS9qM5"
-port = 65322
+host = ""
+user = ""
+password = ""
+port = 
 
 client = paramiko.SSHClient()
 client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
