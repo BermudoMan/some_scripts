@@ -2,36 +2,22 @@ import paramiko
 import pathlib
 from pathlib import Path
 
-host = ""
-user = ""
-password = ""
-port = 
+host = "isuct.ru"
+user = "ged_lab"
+password = "0FhS9qM5"
+port = 65322
 
 client = paramiko.SSHClient()
 client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 client.connect(hostname=host, username=user, password=password, port=port)
 
-# collecting data
+# collecting data and reformat to dictionary
 stdin, stdout, stderr = client.exec_command('echo $(scontrol show jobid)')
 string = stdout.read().decode('utf-8').strip("\n")
 string = string.replace('JobId=', '\nJobId=')
 server_info = open('server_ini_info.txt', '+w')
 server_info.write(string)
 server_info.close()
-
-
-
-class JOBS:
-	def __init__(self, JobId, JobName, UserId, Priority, JobState, RunTime, StartTime, WorkDir, NodeList):
-		self.JobId = jobid
-		self.JobName = jobname
-		self.UserId = userid
-		self.Priority = priority
-		self.JobState = jobstate
-		self.RunTime = runtime
-		self.StartTime = starttime
-		self.WorkDir = workdir
-		self.NodeList = nodelist
 
 def parse(s):
 	try:
@@ -65,11 +51,9 @@ print(jobs)
 
 
 
-server_info.close()
-#data = stdout.read() + stderr.read()
 
 # saving .log, .xyz
-# сделать двойной find 
+# сделать двойной find (по времени и по расширению)
 def find():
 	collection = '/home/ged_lab/__X__/Kurochkin/slurm_monitor/collection'
 	file_for_saving = '/home/ged_lab/__X__/Kurochkin/slurm_monitor/collection2'
