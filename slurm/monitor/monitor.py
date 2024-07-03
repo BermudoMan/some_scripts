@@ -39,40 +39,35 @@ for job in job_list:
 	job.pop(-1)
 
 for job in job_list:
-	print(job[0])
 	jobs[job[0]] = dict(map(parse, job))
 
-print(jobs)
 
-
-
-
-
-
-
-
-
-# saving .log, .xyz
-# сделать двойной find (по времени и по расширению)
-def find():
-	collection = '/home/ged_lab/__X__/Kurochkin/slurm_monitor/collection'
-	file_for_saving = '/home/ged_lab/__X__/Kurochkin/slurm_monitor/collection2'
-	stdin, stdout, stderr = client.exec_command(f'find {file_for_saving} -type f -mmin -15')
+# copy file in dir
+def find(way):
+	# collection = '/home/ged_lab/__X__/Kurochkin/slurm_monitor/collection'
+	# file_for_saving = '/home/ged_lab/__X__/Kurochkin/slurm_monitor/collection'
+	stdin, stdout, stderr = client.exec_command(f'find {way} -type f -mmin -15')
 	string2 = stdout.read().decode('utf-8').strip("\n")
-	stdin2, stdout2, stderr2 = client.exec_command(f'cp {string2} {collection}')
-	copy = stdout2.read().decode('utf-8').strip("\n")
-
 	print(string2)
-	print(copy)
-# searched_last = client.exec_command(f'cp {file_for_saving} {collection}')
+	return string2
+	# try:
+	# 	stdin2, stdout2, stderr2 = client.exec_command(f'cp {string2} {way}')
+	# 	copy = stdout2.read().decode('utf-8').strip("\n")
+	# except:
+	# 	print('some problem')
 
 
-#t = (f'cp {file_for_saving} {collection}')
-#print(t)
-
-
-
-
+collection = []
+for k in jobs:
+	value = jobs[k]
+	collection.append(value['WorkDir'])
+ 
+file_for_saving = open('files_list.txt', '+w')
+for way in collection:
+	way_to_file = find(way)
+	print(way_to_file)
+	file_for_saving.write(way_to_file + '\n')
+file_for_saving.close()			
 
 
 client.close()
