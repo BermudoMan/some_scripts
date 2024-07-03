@@ -70,4 +70,16 @@ for way in collection:
 file_for_saving.close()			
 
 
+# .bat for umv
+banned_names = ''
+bat_file = open('umv_run.bat', '+w')
+with open('files_list.txt' , 'r') as file_list:
+	for way in file_list:
+		if '.log' in way and 'xtb_stdout.log' not in way and 'xtb_stderr.log' not in way:
+			bat_file.write('START umv   ' + way.replace('\n', '') + ' &\n')
+		elif '.xyz' in way and ('restartnvt_andersen') not in way:
+			bat_file.write('START umv   ' + way.replace('\n', '') + ' &\n')
+
+
+bat_file.close()
 client.close()
