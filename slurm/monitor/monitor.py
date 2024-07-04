@@ -48,7 +48,7 @@ def find(way):
 	# file_for_saving = '/home/ged_lab/__X__/Kurochkin/slurm_monitor/collection'
 	stdin, stdout, stderr = client.exec_command(f'find {way} -type f -mmin -15')
 	string2 = stdout.read().decode('utf-8').strip("\n")
-	print(string2)
+	# print(string2)
 	return string2
 	# try:
 	# 	stdin2, stdout2, stderr2 = client.exec_command(f'cp {string2} {way}')
@@ -65,7 +65,7 @@ for k in jobs:
 file_for_saving = open('files_list.txt', '+w')
 for way in collection:
 	way_to_file = find(way)
-	print(way_to_file)
+	# print(way_to_file)
 	file_for_saving.write(way_to_file + '\n')
 file_for_saving.close()			
 
@@ -75,6 +75,8 @@ banned_names = ''
 bat_file = open('umv_run.bat', '+w')
 with open('files_list.txt' , 'r') as file_list:
 	for way in file_list:
+		way = way.replace('/',"\\")
+		way = way.replace('\\home\\ged_lab\\__X__', '\\\\192.168.70.100\\ged_home')
 		if '.log' in way and 'xtb_stdout.log' not in way and 'xtb_stderr.log' not in way:
 			bat_file.write('START umv   ' + way.replace('\n', '') + ' &\n')
 		elif '.xyz' in way and ('restartnvt_andersen') not in way:
